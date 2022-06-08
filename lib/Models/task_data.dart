@@ -17,7 +17,7 @@ class _Task {
 }
 
 class TaskData extends ChangeNotifier {
-  List<_Task> _tasks = [];
+  final List<_Task> _tasks = [];
 
   int get taskCount {
     return _tasks.length;
@@ -32,9 +32,9 @@ class TaskData extends ChangeNotifier {
   }
 
   void updateTask(int index) {
-    this._tasks[index]._toggleDone();
+    _tasks[index]._toggleDone();
     notifyListeners();
-    save(task: this._tasks[index]);
+    save(task: _tasks[index]);
   }
 
   void deleteTask(int index) {
@@ -71,16 +71,16 @@ class TaskData extends ChangeNotifier {
       return;
     }
 
-    final List<String> namesList = this.taskNames;
+    final List<String> namesList = taskNames;
     prefs.setStringList(_tasksKey, namesList);
 
-    final List<String> categoryList = this.taskCategories;
+    final List<String> categoryList = taskCategories;
     prefs.setStringList(_categoryKey, categoryList);
 
-    _tasks.forEach((task) {
+    for (var task in _tasks) {
       prefs.setBool(task.name, task.isChecked);
       prefs.setBool(task.category, task.isChecked);
-    });
+    }
   }
 
   load() async {

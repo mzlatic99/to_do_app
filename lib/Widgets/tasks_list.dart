@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_app/constants.dart';
 import 'task_tile.dart';
 import 'package:provider/provider.dart';
 import '../Models/task_data.dart';
@@ -13,10 +14,7 @@ class TaskList extends StatelessWidget {
             onHorizontalDragEnd: (details) {
               taskData.deleteTask(index);
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('Task dismissed'),
-                  backgroundColor: Colors.green[700],
-                ),
+                kSnackBar,
               );
             },
             child: TaskTile(
@@ -29,7 +27,7 @@ class TaskList extends StatelessWidget {
             ),
           );
         },
-        itemCount: taskData.taskCount == null ? 0 : taskData.taskCount,
+        itemCount: taskData.taskCount ?? 0,
       );
     });
   }

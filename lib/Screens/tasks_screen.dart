@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../Widgets/tasks_list.dart';
 import '../Models/task_data.dart';
+import '../constants.dart';
 
 class TasksScreen extends StatelessWidget {
   static const String id = 'tasks_screen';
@@ -18,24 +19,16 @@ class TasksScreen extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             elevation: 0.0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                bottomRight: Radius.circular(20.0),
-              ),
-            ),
-            backgroundColor: Colors.green,
+            shape: kAppBarShape,
+            backgroundColor: kMainColor,
             actions: [
               Center(
                 child: Padding(
-                  padding: const EdgeInsets.only(right: 24.0),
+                  padding: kDateRightPadding,
                   child: Text(
                     '${now.day}. ${now.month}. ${now.year.toString().substring(2)}.',
                     style: GoogleFonts.livvic(
-                      textStyle: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 12.0,
-                      ),
+                      textStyle: kTasksNumAndDateStyle,
                     ),
                   ),
                 ),
@@ -46,32 +39,23 @@ class TasksScreen extends StatelessWidget {
               textBaseline: TextBaseline.alphabetic,
               children: [
                 Text(
-                  'ToDo',
+                  kAppTitle,
                   style: GoogleFonts.livvic(
-                    textStyle: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    textStyle: kAppTitleStyle,
                   ),
                 ),
-                SizedBox(
-                  width: 6.0,
-                ),
+                kTitleNumberOfTasksSpace,
                 Text(
                   '${taskData.taskCount} Tasks',
                   style: GoogleFonts.livvic(
-                    textStyle: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 12.0,
-                    ),
+                    textStyle: kTasksNumAndDateStyle,
                   ),
                 ),
               ],
             ),
           ),
           body: Padding(
-            padding: EdgeInsets.all(16.0),
+            padding: kBodyPadding,
             child: TaskList(),
           ),
           floatingActionButton: FloatingActionButton(
@@ -79,28 +63,19 @@ class TasksScreen extends StatelessWidget {
               showModalBottomSheet(
                   isScrollControlled: true,
                   context: context,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20.0),
-                      topRight: Radius.circular(20.0),
-                    ),
-                  ),
+                  shape: kFABStyle,
                   builder: (context) {
                     return StatefulBuilder(
                         builder: (context, StateSetter newSetState) {
-                      return Container(
+                      return SizedBox(
                         height: MediaQuery.of(context).size.height * 0.75,
                         child: Padding(
-                          padding: EdgeInsets.all(20.0),
+                          padding: kSheetPadding,
                           child: Column(
                             children: [
                               TextField(
                                 style: GoogleFonts.livvic(
-                                  textStyle: TextStyle(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.green[600],
-                                  ),
+                                  textStyle: kTextFieldTextStyle,
                                 ),
                                 onChanged: (value) {
                                   title = value;
@@ -108,11 +83,9 @@ class TasksScreen extends StatelessWidget {
                                 textAlign: TextAlign.center,
                                 autofocus: true,
                                 decoration: InputDecoration(
-                                  hintText: 'Title',
+                                  hintText: kTextFieldHint,
                                   hintStyle: GoogleFonts.livvic(
-                                    textStyle: TextStyle(
-                                      fontSize: 14.0,
-                                    ),
+                                    textStyle: kTextFieldHintStyle,
                                   ),
                                 ),
                               ),
@@ -120,22 +93,16 @@ class TasksScreen extends StatelessWidget {
                                 children: [
                                   Expanded(
                                     child: Text(
-                                      'Category',
+                                      kCategoryText,
                                       style: GoogleFonts.livvic(
-                                        textStyle: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14.0,
-                                        ),
+                                        textStyle: kCategoryTextStyle,
                                       ),
                                     ),
                                   ),
                                   DropdownButton<String>(
                                       borderRadius: BorderRadius.circular(20.0),
                                       style: GoogleFonts.livvic(
-                                        textStyle: TextStyle(
-                                          fontSize: 14.0,
-                                          color: Colors.black,
-                                        ),
+                                        textStyle: kDropdownItemsTextStyle,
                                       ),
                                       items: <String>[
                                         'Custom',
@@ -167,17 +134,14 @@ class TasksScreen extends StatelessWidget {
                                 style: ButtonStyle(
                                   backgroundColor:
                                       MaterialStateProperty.all<Color>(
-                                          Colors.green),
+                                          kMainColor),
                                 ),
                                 onPressed: () {
                                   taskData.addTask(title, categoryValue);
-                                  categoryValue = 'Custom';
+                                  categoryValue = kDefaultDropdownValue;
                                   Navigator.pop(context);
                                 },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(12.0),
-                                  child: Text('Add task'),
-                                ),
+                                child: kButtonAddTask,
                               ),
                             ],
                           ),
@@ -186,15 +150,12 @@ class TasksScreen extends StatelessWidget {
                     });
                   });
             },
-            child: Icon(
-              Icons.add_rounded,
-              size: 28.0,
-            ),
             backgroundColor: Colors.green,
             elevation: 0.0,
             highlightElevation: 0.0,
             splashColor: Colors.green[800],
             mini: true,
+            child: kFABIcon,
           ),
         );
       },

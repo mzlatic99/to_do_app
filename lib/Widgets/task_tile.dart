@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:to_do_app/constants.dart';
 
 class TaskTile extends StatelessWidget {
   TaskTile({
@@ -17,42 +18,32 @@ class TaskTile extends StatelessWidget {
     switch (category) {
       case 'Work':
         return 1;
-        break;
       case 'House':
         return 2;
-        break;
       case 'Food':
         return 0;
-        break;
       case 'Event':
         return 3;
-        break;
       case 'School':
         return 4;
-        break;
       case 'Journey':
         return 5;
-        break;
       case 'Idea':
         return 6;
-        break;
       case 'Gift':
         return 7;
-        break;
       case 'Shopping':
         return 8;
-        break;
       default:
         return 10;
-        break;
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return CheckboxListTile(
-      contentPadding: const EdgeInsets.only(right: 16.0),
-      activeColor: Colors.green,
+      contentPadding: kContentPadding,
+      activeColor: kMainColor,
       value: isChecked,
       onChanged: checkBoxCallback,
       title: Row(
@@ -61,12 +52,10 @@ class TaskTile extends StatelessWidget {
             image: AssetImage(
               'icons/icon-${icon(taskCategory)}.png',
             ),
-            width: 50,
+            width: 50.0,
             color: isChecked == true ? Colors.black : null,
           ),
-          SizedBox(
-            width: 10,
-          ),
+          kTileIconTextSpace,
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -85,9 +74,7 @@ class TaskTile extends StatelessWidget {
               Text(
                 taskCategory,
                 style: GoogleFonts.alata(
-                  textStyle: TextStyle(
-                    color: Colors.pink,
-                  ),
+                  textStyle: kTaskCategoryTextStyle,
                 ),
               ),
             ],
