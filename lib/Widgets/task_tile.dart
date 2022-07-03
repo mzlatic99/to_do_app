@@ -59,17 +59,33 @@ class TaskTile extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                taskName,
-                style: GoogleFonts.alata(
-                  textStyle: TextStyle(
-                      fontWeight:
-                          isChecked ? FontWeight.normal : FontWeight.bold,
-                      fontSize: 16.0,
-                      decoration: isChecked
-                          ? TextDecoration.lineThrough
-                          : TextDecoration.none),
-                ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Flexible(
+                    child: Container(
+                      constraints: BoxConstraints(
+                          maxWidth: MediaQuery.of(context).size.width / 1.7),
+                      child: Text(
+                        taskName,
+                        softWrap: true,
+                        overflow: TextOverflow.clip,
+                        style: GoogleFonts.alata(
+                          textStyle: TextStyle(
+                              fontWeight: isChecked
+                                  ? FontWeight.normal
+                                  : FontWeight.bold,
+                              fontSize: 16.0,
+                              decoration: isChecked
+                                  ? TextDecoration.lineThrough
+                                  : TextDecoration.none),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
               Text(
                 taskCategory,
